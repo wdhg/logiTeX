@@ -1,3 +1,5 @@
+import Data.Char          (isSpace)
+import Data.List          (dropWhileEnd)
 import System.Environment
 
 conversionMap :: [(String, String)]
@@ -49,8 +51,11 @@ embedLine :: String -> String
 embedLine ('#' : ' ' : text)
   = text
 embedLine text
-  = eqntFront ++ text ++ eqntEnd
+  | text' == "" = ""
+  | otherwise   = eqntFront ++ text' ++ eqntEnd
     where
+      text'
+        = dropWhileEnd isSpace $ dropWhile isSpace text
       eqntFront
         = "\\begin{equation}\n"
       eqntEnd
