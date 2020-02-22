@@ -1,3 +1,5 @@
+import System.Environment
+
 conversionMap :: [(String, String)]
 conversionMap
   = [ ("\\A", "\\forall")
@@ -50,7 +52,35 @@ convert :: String -> String
 convert text
   = embedFile $ unlines $ map embedEqnt $ lines $ foldl replace text conversionMap
 
+pipedInput :: IO ()
+pipedInput
+  = do
+    contents <- getContents
+    putStrLn $ convert contents
+
+fileInput :: String -> IO ()
+fileInput inputFile
+  = do
+    contents <- readFile inputFile
+    putStrLn $ convert contents
+
+fileInputOutput :: String -> String -> IO ()
+fileInputOutput inputFile outputFile
+  = do
+    contents <- readFile inputFile
+    writeFile outputFile $ convert contents
+
+usage :: IO ()
+usage
+  = do
+    putStrLn "Invalid arguments"
+    putStrLn "Usage: logitex [filename] [output]"
+
 main :: IO ()
 main = do
-  contents <- getContents
-  putStrLn $ convert contents
+  args <- getArgs
+  case args of
+    []                      -> pipedInput
+    [inputFile]             -> fileInput inputFile
+    [inputFile, outputFile] -> fileInputOutput inputFile outputFile
+    _                       -> usage
