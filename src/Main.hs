@@ -38,7 +38,7 @@ embedFile text
     where
       fileStart
         = "\\documentclass{article}\n\
-          \\\usepackage{dsfont, amssymb}\n\
+          \\\usepackage{dsfont, amssymb, amsmath}\n\
           \\\usepackage{listings}\n\
           \\\begin{document}\n\
           \\\begin{flushleft}\n"
@@ -54,9 +54,11 @@ embedLine text
       text'
         = dropWhileEnd isSpace $ dropWhile isSpace text
       eqntStart
-        = "\\begin{equation}\n"
+        = "\\begin{align}\n\
+          \\\begin{split}\n"
       eqntEnd
-        = "\n\\end{equation}"
+        = "\n\\end{split}\n\
+          \\\end{align}"
 
 convertLine :: String -> String
 convertLine ('#' : ' ' : text)
