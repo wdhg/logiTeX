@@ -17,14 +17,6 @@ conversionMap
     , (">=", "\\geqslant")
     ]
 
-isPrefix :: String -> String -> Bool
-isPrefix "" _
-  = True
-isPrefix (_ : _) ""
-  = False
-isPrefix (x : xs) (y : ys)
-  = x == y && isPrefix xs ys
-
 replace :: [String] -> (String, String) -> [String]
 replace text (keyword, replacement)
   = map replace' text
