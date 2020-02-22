@@ -5,12 +5,15 @@ import System.Environment
 conversionMap :: [(String, String)]
 conversionMap
   = [ ("\\A", "\\forall")
+    , ("forall", "\\forall")
     , ("\\E", "\\exists")
+    , ("exists", "\\exists")
     , ("in",  "\\in")
     , ("and", "\\land")
     , ("not", "\\neg")
     , ("=>", " \\implies")
     , ("<=>", "\\iff")
+    , ("/=", "\\neq")
     , ("~=", "\\approx")
     , (":=", "\\triangleq")
     , ("<=", "\\leqslant")
