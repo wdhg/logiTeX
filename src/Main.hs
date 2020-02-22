@@ -10,6 +10,7 @@ conversionMap
     , (" => ", " \\implies")
     , (" <=> ", " \\iff ")
     , ("~=", "\\approx")
+    , (":=", "\\triangleq")
     ]
 
 isPrefix :: String -> String -> Bool
@@ -36,7 +37,7 @@ embedFile text
     where
       fileFront
         = "\\documentclass{article}\n\
-          \\\usepackage{dsfont}\n\
+          \\\usepackage{dsfont, amssymb}\n\
           \\\usepackage{listings}\n\
           \\\begin{document}\n"
       fileEnd
