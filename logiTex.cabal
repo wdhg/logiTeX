@@ -6,9 +6,6 @@ homepage:            https://github.com/wdhg/logiTex#readme
 license:             BSD3
 license-file:        LICENSE
 author:              wdhg
-maintainer:          example@example.com
-copyright:           2020 wdhg
-category:            Web
 build-type:          Simple
 cabal-version:       >=1.10
 extra-source-files:  README.md
