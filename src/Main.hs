@@ -5,12 +5,12 @@ import System.Environment
 conversionMap :: [(String, String)]
 conversionMap
   = [ ("\\A", "\\forall")
-    , ("\\E", " \\exists ")
-    , (" in ",  " \\in ")
-    , (" and ", " \\land ")
-    , ("not ", "\\neg ")
-    , (" => ", " \\implies")
-    , (" <=> ", " \\iff ")
+    , ("\\E", "\\exists")
+    , ("in",  "\\in")
+    , ("and", "\\land")
+    , ("not", "\\neg")
+    , ("=>", " \\implies")
+    , ("<=>", "\\iff")
     , ("~=", "\\approx")
     , (":=", "\\triangleq")
     , ("<=", "\\leqslant")
@@ -25,15 +25,14 @@ isPrefix (_ : _) ""
 isPrefix (x : xs) (y : ys)
   = x == y && isPrefix xs ys
 
-replace :: String -> (String, String) -> String
-replace "" _
-  = ""
-replace text@(c : remaining) mapping@(prefix, replacement)
-  | isPrefix prefix text = replacement ++ replace text' mapping
-  | otherwise            = c : replace remaining mapping
+replace :: [String] -> (String, String) -> [String]
+replace text (keyword, replacement)
+  = map replace' text
     where
-      text'
-        = drop (length prefix) text
+      replace' :: String -> String
+      replace' word
+        | word == keyword = replacement
+        | otherwise       = word
 
 embedFile :: String -> String
 embedFile text
@@ -48,8 +47,6 @@ embedFile text
         = "\\end{document}"
 
 embedLine :: String -> String
-embedLine ('#' : ' ' : text)
-  = text
 embedLine text
   | text' == "" = ""
   | otherwise   = eqntFront ++ text' ++ eqntEnd
@@ -62,8 +59,10 @@ embedLine text
         = "\n\\end{equation}"
 
 convertLine :: String -> String
+convertLine ('#' : ' ' : text)
+  = text
 convertLine line
-  = embedLine $ foldl replace line conversionMap
+  = embedLine $ unwords $ foldl replace (words line) conversionMap
 
 convert :: String -> String
 convert text
