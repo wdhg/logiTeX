@@ -54,9 +54,7 @@ convert text
 
 pipedInput :: IO ()
 pipedInput
-  = do
-    contents <- getContents
-    putStrLn $ convert contents
+  = interact convert
 
 fileInput :: String -> IO ()
 fileInput inputFile
