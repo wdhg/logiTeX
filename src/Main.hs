@@ -11,6 +11,8 @@ conversionMap
     , (" <=> ", " \\iff ")
     , ("~=", "\\approx")
     , (":=", "\\triangleq")
+    , ("<=", "\\leqslant")
+    , (">=", "\\geqslant")
     ]
 
 isPrefix :: String -> String -> Bool
