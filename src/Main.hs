@@ -5,8 +5,10 @@ conversionMap
   = [ ("\\A", "\\forall")
     , ("\\E", " \\exists ")
     , (" in ",  " \\in ")
-    , (" -> ", " \\rightarrow ")
-    , (" <-> ", " \\leftrightarrow ")
+    , (" and ", " \\land ")
+    , (" => ", " \\implies")
+    , (" <=> ", " \\iff")
+    , ("~=", "\\approx")
     ]
 
 isPrefix :: String -> String -> Bool
