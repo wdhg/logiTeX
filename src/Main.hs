@@ -42,9 +42,11 @@ embedFile text
         = "\\documentclass{article}\n\
           \\\usepackage{dsfont, amssymb}\n\
           \\\usepackage{listings}\n\
-          \\\begin{document}\n"
+          \\\begin{document}\n\
+          \\\begin{flushleft}\n"
       fileEnd
-        = "\\end{document}"
+        = "\\end{flushleft}\n\
+          \\\end{document}"
 
 embedLine :: String -> String
 embedLine text
