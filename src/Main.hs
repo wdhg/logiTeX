@@ -50,7 +50,7 @@ embedFile text
 
 embedLine :: String -> String
 embedLine text
-  | text' == "" = ""
+  | text' == "" = "\\newline\\newline"
   | otherwise   = eqntFront ++ text' ++ eqntEnd
     where
       text'
