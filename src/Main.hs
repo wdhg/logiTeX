@@ -36,9 +36,9 @@ replace text (keyword, replacement)
 
 embedFile :: String -> String
 embedFile text
-  = fileFront ++ text ++ fileEnd
+  = fileStart ++ text ++ fileEnd
     where
-      fileFront
+      fileStart
         = "\\documentclass{article}\n\
           \\\usepackage{dsfont, amssymb}\n\
           \\\usepackage{listings}\n\
@@ -51,11 +51,11 @@ embedFile text
 embedLine :: String -> String
 embedLine text
   | text' == "" = "\\newline\\newline"
-  | otherwise   = eqntFront ++ text' ++ eqntEnd
+  | otherwise   = eqntStart ++ text' ++ eqntEnd
     where
       text'
         = dropWhileEnd isSpace $ dropWhile isSpace text
-      eqntFront
+      eqntStart
         = "\\begin{equation}\n"
       eqntEnd
         = "\n\\end{equation}"
