@@ -6,8 +6,9 @@ conversionMap
     , ("\\E", " \\exists ")
     , (" in ",  " \\in ")
     , (" and ", " \\land ")
+    , ("not ", "\\neg ")
     , (" => ", " \\implies")
-    , (" <=> ", " \\iff")
+    , (" <=> ", " \\iff ")
     , ("~=", "\\approx")
     ]
 
@@ -41,8 +42,10 @@ embedFile text
       fileEnd
         = "\\end{document}"
 
-embedEqnt :: String -> String
-embedEqnt text
+embedLine :: String -> String
+embedLine ('#' : ' ' : text)
+  = text
+embedLine text
   = eqntFront ++ text ++ eqntEnd
     where
       eqntFront
@@ -52,7 +55,7 @@ embedEqnt text
 
 convert :: String -> String
 convert text
-  = embedFile $ unlines $ map embedEqnt $ lines $ foldl replace text conversionMap
+  = embedFile $ unlines $ map embedLine $ lines $ foldl replace text conversionMap
 
 pipedInput :: IO ()
 pipedInput
