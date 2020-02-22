@@ -1,1 +1,1 @@
-# logiTex
+# logiTeX
