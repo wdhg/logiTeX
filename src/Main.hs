@@ -29,7 +29,7 @@ replace :: String -> (String, String) -> String
 replace "" _
   = ""
 replace text@(c : remaining) mapping@(prefix, replacement)
-  | isPrefix prefix text = replacement ++ text'
+  | isPrefix prefix text = replacement ++ replace text' mapping
   | otherwise            = c : replace remaining mapping
     where
       text'
