@@ -54,9 +54,13 @@ embedLine text
       eqntEnd
         = "\n\\end{equation}"
 
+convertLine :: String -> String
+convertLine line
+  = embedLine $ foldl replace line conversionMap
+
 convert :: String -> String
 convert text
-  = embedFile $ unlines $ map embedLine $ lines $ foldl replace text conversionMap
+  = embedFile $ unlines $ map convertLine $ lines text
 
 pipedInput :: IO ()
 pipedInput
