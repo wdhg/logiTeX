@@ -42,9 +42,11 @@ embedFile text
           \\\usepackage{dsfont, amssymb, amsmath}\n\
           \\\usepackage{listings}\n\
           \\\begin{document}\n\
-          \\\begin{flushleft}\n"
+          \\\begin{flushleft}\n
+          \\\begin{enumerate}\n"
       fileEnd
-        = "\\end{flushleft}\n\
+        = "\\end{enumerate}\n\
+          \\\end{flushleft}\n\
           \\\end{document}"
 
 embedLine :: String -> String
