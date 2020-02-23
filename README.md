@@ -40,7 +40,7 @@ A & = 3 + 4 \\
 
 // this is a code snippet
 // each line will be enumerated on the left
-```Haskell
+```
 isEven :: Int -> Bool
 isEven x
   = x `mod` 2
