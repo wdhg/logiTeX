@@ -21,6 +21,7 @@ conversionMap
     , (":=", "\\triangleq")
     , ("<=", "\\leqslant")
     , (">=", "\\geqslant")
+    , ("precedes", "\\prec")
     ]
 
 replace :: [String] -> (String, String) -> [String]
