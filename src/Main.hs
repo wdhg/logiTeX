@@ -99,7 +99,6 @@ convertLine line
         | isType line = embedLine embedding $ unwords $ foldl replace (words line) mappings
         | otherwise   = line
 
-
 convert :: String -> String
 convert text
   = embedFile $ unlines $ map convertLine $ lines text
