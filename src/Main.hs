@@ -1,4 +1,5 @@
 import LogiTeX
+import System.Environment
 
 usage :: IO ()
 usage

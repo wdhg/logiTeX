@@ -21,13 +21,16 @@ executable logitex
   build-depends:
     base >= 4.7 && < 5
   other-modules:
-    LogiTeX
+    LogiTeX,
+    Utils,
+    Lexer
 
 test-suite test
   type:
     exitcode-stdio-1.0
   hs-source-dirs:
     test
+    src/LogiTeX
   main-is:
     Spec.hs
   default-language:
@@ -35,6 +38,10 @@ test-suite test
   ghc-options:
     -Wall
   build-depends:
-    base >= 4.7 && < 5
+    base >= 4.7 && < 5,
+    HUnit
   other-modules:
-    LogiTeX
+    LogiTeX,
+    Utils,
+    UtilsTest,
+    Lexer
