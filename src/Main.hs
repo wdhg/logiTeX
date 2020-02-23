@@ -2,36 +2,39 @@ import Data.Char          (isSpace)
 import Data.List          (dropWhileEnd)
 import System.Environment
 
-conversionMap :: [(String, String)]
+type Mapping
+  = ([String], String)
+
+(==>) :: [String] -> String -> Mapping
+(==>)
+  = (,)
+
+conversionMap :: [Mapping]
 conversionMap
-  = [ ("\\A", "\\forall")
-    , ("forall", "\\forall")
-    , ("\\E", "\\exists")
-    , ("exists", "\\exists")
-    , ("in",  "\\in")
-    , ("and", "\\land")
-    , ("&&", "\\land")
-    , ("or", "\\lor")
-    , ("||", "\\lor")
-    , ("not", "\\neg")
-    , ("=>", " \\implies")
-    , ("<=>", "\\iff")
-    , ("/=", "\\neq")
-    , ("~=", "\\approx")
-    , (":=", "\\triangleq")
-    , ("<=", "\\leqslant")
-    , (">=", "\\geqslant")
-    , ("precedes", "\\prec")
+  = [ ["\\A", "forall"] ==> "\\forall"
+    , ["\\E", "exists"] ==> "\\exists"
+    , ["in"] ==>  "\\in"
+    , ["&&", "and"] ==> "\\land"
+    , ["||", "or"] ==> "\\lor"
+    , ["not"] ==> "\\neg"
+    , ["=>"] ==> " \\implies"
+    , ["<=>"] ==> "\\iff"
+    , ["/="] ==> "\\neq"
+    , ["~="] ==> "\\approx"
+    , [":="] ==> "\\triangleq"
+    , ["<="] ==> "\\leqslant"
+    , [">="] ==> "\\geqslant"
+    , ["precedes"] ==> "\\prec"
     ]
 
-replace :: [String] -> (String, String) -> [String]
-replace text (keyword, replacement)
+replace :: [String] -> Mapping -> [String]
+replace text (keywords, replacement)
   = map replace' text
     where
       replace' :: String -> String
       replace' word
-        | word == keyword = replacement
-        | otherwise       = word
+        | word `elem` keywords = replacement
+        | otherwise            = word
 
 embedFile :: String -> String
 embedFile text
@@ -42,7 +45,7 @@ embedFile text
           \\\usepackage{dsfont, amssymb, amsmath}\n\
           \\\usepackage{listings}\n\
           \\\begin{document}\n\
-          \\\begin{flushleft}\n
+          \\\begin{flushleft}\n\
           \\\begin{enumerate}\n"
       fileEnd
         = "\\end{enumerate}\n\
