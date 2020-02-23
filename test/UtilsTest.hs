@@ -21,9 +21,27 @@ trimTests
     , trim "aaa" ~?= "aaa"
     ]
 
+startsWithTests :: Test
+startsWithTests
+  = TestList
+    [ startsWith "a" "ab" ~? "incorrect"
+    , (not $ startsWith "b" "ab") ~? "incorrect"
+    , startsWith "ab" "ab" ~? "incorrect"
+    ]
+
+splitOnTests :: Test
+splitOnTests
+  = TestList
+    [ splitOn "b" "aba" ~?= ("a", "a")
+    , splitOn "a" "aba" ~?= ("", "ba")
+    , splitOn "c" "aba" ~?= ("aba", "")
+    ]
+
 tests :: Test
 tests
   = TestList
     [ "takeFirstWord" ~: takeFirstWordTests
     , "trim" ~: trimTests
+    , "startsWith" ~: startsWithTests
+    , "splitOn" ~: splitOnTests
     ]
