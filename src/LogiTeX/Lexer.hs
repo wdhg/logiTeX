@@ -1,7 +1,7 @@
 module Lexer where
 
 import Data.Char (isSpace)
-import Utils     (takeFirstWord)
+import Utils
 
 data SectionType
   = Title
@@ -13,22 +13,38 @@ data SectionType
   | Snippet
   | Latex
   | LatexMulti
+  | Comment
   | Text
+    deriving (Show, Eq)
 
 data Token
   = Token SectionType String
+    deriving (Show, Eq)
+
+typeMap :: [(String, SectionType)]
+typeMap
+  = [ ("~"   , Title)
+    , ("#"   , Question)
+    , ("##"  , SubQuestion)
+    , ("###" , SubSubQuestion)
+    , ("%"   , Equation)
+    , ("%%%" , EquationMulti)
+    , ("```" , Snippet)
+    , ("@"   , Latex)
+    , ("@@@" , LatexMulti)
+    , ("//"  , Comment)
+    , (""    , Text)
+    ]
+
+splitOnType :: String -> (String, String)
+splitOnType
+  =
 
 getType :: String -> SectionType
-getType "~"   = Title
-getType "#"   = Question
-getType "##"  = SubQuestion
-getType "###" = SubSubQuestion
-getType "%"   = Equation
-getType "%%%" = EquationMulti
-getType "```" = Snippet
-getType "@"   = Latex
-getType "@@@" = LatexMulti
-getType _     = Text
+getType prefix
+  = case lookup prefix typeMap of
+      Just sectionType -> sectionType
+      Nothing          -> error $ "no SectionType for prefix " ++ prefix
 
 getDelimiter :: SectionType -> String
 getDelimiter EquationMulti = "%%%"
@@ -38,8 +54,10 @@ getDelimiter _             = "\n"
 
 getNextToken :: String -> (Token, String)
 getNextToken text
-  = undefined
+  = (Token sectionType (trim before), trim after)
     where
+      (before, after)
+        = splitOn delimiter $ trim text
       delimiter
         = getDelimiter sectionType
       sectionType
