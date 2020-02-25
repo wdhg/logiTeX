@@ -38,7 +38,7 @@ typeMap
 
 splitOnType :: String -> (String, String)
 splitOnType
-  =
+  = undefined
 
 getType :: String -> SectionType
 getType prefix
@@ -53,15 +53,6 @@ getDelimiter LatexMulti    = "@@@"
 getDelimiter _             = "\n"
 
 getNextToken :: String -> (Token, String)
-getNextToken text
-  = (Token sectionType (trim before), trim after)
-    where
-      (before, after)
-        = splitOn delimiter $ trim text
-      delimiter
-        = getDelimiter sectionType
-      sectionType
-        = getType $ takeFirstWord text
 
 tokenize :: String -> [Token]
 tokenize
