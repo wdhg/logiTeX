@@ -37,8 +37,14 @@ typeMap
     ]
 
 splitOnType :: String -> (String, String)
-splitOnType
-  = undefined
+splitOnType text
+  = (prefix, trim $ drop (length prefix) text)
+    where
+      prefix
+        = fst $ head $ filter prefixMatches typeMap
+      prefixMatches :: (String, SectionType) -> Bool
+      prefixMatches (prefix, sectionType)
+        = prefix == (take (length prefix) text)
 
 getType :: String -> SectionType
 getType prefix
@@ -53,6 +59,8 @@ getDelimiter LatexMulti    = "@@@"
 getDelimiter _             = "\n"
 
 getNextToken :: String -> (Token, String)
+getNextToken
+  = undefined
 
 tokenize :: String -> [Token]
 tokenize
