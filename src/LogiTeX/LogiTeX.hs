@@ -1,5 +1,15 @@
 module LogiTeX where
 
+import Lexer
+
+tokenToText :: Token -> String
+tokenToText
+  = undefined
+
+convert :: String -> String
+convert
+  = undefined
+
 pipedInput :: IO ()
 pipedInput
   = undefined
