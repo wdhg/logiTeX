@@ -3,6 +3,15 @@ module LexerTest (tests) where
 import Lexer
 import Test.HUnit
 
+splitOnTypeTests :: Test
+splitOnTypeTests
+  = TestList
+    [ splitOnType "abc\ndef" ~?= ("", "abc\ndef")
+    , splitOnType "%abc\ndef" ~?= ("%", "abc\ndef")
+    , splitOnType "% abc\ndef" ~?= ("%", "abc\ndef")
+    , splitOnType "@ abc\ndef" ~?= ("@", "abc\ndef")
+    ]
+
 getNextTokenTests :: Test
 getNextTokenTests
   = TestList
@@ -14,5 +23,5 @@ getNextTokenTests
 tests :: Test
 tests
   = TestList
-    [ "getNextToken" ~: getNextTokenTests
+    [ "splitOnType" ~: splitOnTypeTests
     ]
