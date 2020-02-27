@@ -19,19 +19,21 @@ data SectionType
 
 data Token
   = Token SectionType String
+  | EmptyToken
     deriving (Show, Eq)
 
+-- order of typeMap shows order of checks
 typeMap :: [(String, SectionType)]
 typeMap
   = [ ("~"   , Title)
-    , ("#"   , Question)
-    , ("##"  , SubQuestion)
     , ("###" , SubSubQuestion)
-    , ("%"   , Equation)
+    , ("##"  , SubQuestion)
+    , ("#"   , Question)
     , ("%%%" , EquationMulti)
+    , ("%"   , Equation)
     , ("```" , Snippet)
-    , ("@"   , Latex)
     , ("@@@" , LatexMulti)
+    , ("@"   , Latex)
     , ("//"  , Comment)
     , (""    , Text)
     ]
@@ -59,9 +61,20 @@ getDelimiter LatexMulti    = "@@@"
 getDelimiter _             = "\n"
 
 getNextToken :: String -> (Token, String)
-getNextToken
-  = undefined
+getNextToken text
+  = (Token sectionType $ trim tokenContent, trim remaining')
+    where
+      (prefix, remaining)
+        = splitOnType text
+      sectionType
+        = getType prefix
+      (tokenContent, remaining')
+        = splitOn (getDelimiter sectionType) remaining
 
 tokenize :: String -> [Token]
-tokenize
-  = undefined
+tokenize text
+  | null $ trim text = []
+  | otherwise        = token : tokenize remaining
+    where
+      (token, remaining)
+        = getNextToken text

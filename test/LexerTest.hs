@@ -20,8 +20,17 @@ getNextTokenTests
     , getNextToken "@@@\nabc\ndef\n@@@\nghi" ~?= (Token LatexMulti "abc\ndef", "ghi")
     ]
 
+tokenizeTests :: Test
+tokenizeTests
+  = TestList
+    [ tokenize "~a\n%b\n```\nc\n```" ~?= [Token Title "a", Token Equation "b", Token Snippet "c"]
+
+    ]
+
 tests :: Test
 tests
   = TestList
     [ "splitOnType" ~: splitOnTypeTests
+    , "getNextToken" ~: getNextTokenTests
+    , "tokenize" ~: tokenizeTests
     ]
