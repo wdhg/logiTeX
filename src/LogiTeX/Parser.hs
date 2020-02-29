@@ -3,10 +3,10 @@ module Parser where
 import Lexer
 
 data AST
-  = Question [AST]
+  = Node [AST]
   | Text token
 
 
 parse :: [Token] -> AST
-parse
+parse (token : remaining)
   = undefined
