@@ -38,6 +38,11 @@ typeMap
     , (""    , Text)
     ]
 
+isQuestion :: SectionType -> Bool
+isQuestion Question       = True
+isQuestion SubQuestion    = True
+isQuestion SubSubQuestion = True
+
 splitOnType :: String -> (String, String)
 splitOnType text
   = (prefix, trim $ drop (length prefix) text)
