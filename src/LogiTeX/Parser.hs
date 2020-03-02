@@ -3,8 +3,8 @@ module Parser where
 import Lexer
 
 data AST
-  = Node [AST]
-  | Text token
+  = Node Token [AST]
+  | Text Token
 
 
 parse :: [Token] -> AST
