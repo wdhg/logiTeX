@@ -6,6 +6,12 @@ data AST
   = Node Token [AST]
   | Text Token
 
+astPrecedence :: AST -> Int
+ast (Node token _)
+  = tokenPrecedence token
+ast (Text token)
+  = tokenPrecedence token
+
 tokenPrecedence :: Token -> Int
 tokenPrecedence (Token sectionType _)
   = precedence sectionType
