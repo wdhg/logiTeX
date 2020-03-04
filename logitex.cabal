@@ -23,7 +23,8 @@ executable logitex
   other-modules:
     LogiTeX,
     Utils,
-    Lexer
+    Lexer,
+    Parser
 
 test-suite test
   type:

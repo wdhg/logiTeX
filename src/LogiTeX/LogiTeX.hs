@@ -1,6 +1,7 @@
 module LogiTeX where
 
 import Lexer
+import Parser
 
 (==>) :: a -> b -> (a, b)
 (==>)
