@@ -36,11 +36,14 @@ collate :: [AST] -> AST
 -- PRE: trees are in assending order of precedence with the last tree having a
 -- unique precedence level
 collate
-  = head . until equalPrecedence collate'
+  = head . until allLessOrEqual collate'
     where
-      equalPrecedence :: [AST] -> Bool
-      equalPrecedence (top : remaining)
-        = all ((== level) . astPrecedence) remaining
+      lessOrEqualPrecedence :: Int -> AST -> Bool
+      lessOrEqualPrecedence level
+        = (<= level) . astPrecedence
+      allLessOrEqual :: [AST] -> Bool
+      allLessOrEqual (top : remaining)
+        = all (lessOrEqualPrecedence level) remaining
           where
             level
               = astPrecedence top
@@ -51,7 +54,7 @@ collate
             level
               = astPrecedence top
             (subTrees, nodeTree : remaining')
-              = span ((== level) . astPrecedence) remaining
+              = span (lessOrEqualPrecedence level) remaining
 
 parse :: [Token] -> AST
 parse
