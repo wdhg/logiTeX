@@ -6,7 +6,7 @@ data AST
   = Root [AST]
   | Node Token [AST]
   | Leaf Token
-    deriving (Show)
+    deriving (Show, Eq)
 
 astPrecedence :: AST -> Int
 astPrecedence (Node token _)
