@@ -32,11 +32,9 @@ push (Node token subTrees) tree
 push (Root subTrees) tree
   = Root (tree : subTrees)
 
-collate :: [AST] -> AST
--- PRE: trees are in assending order of precedence with the last tree having a
--- unique precedence level
+collate :: [AST] -> [AST]
 collate
-  = head . until allLessOrEqual collate'
+  = until allLessOrEqual collate'
     where
       lessOrEqualPrecedence :: Int -> AST -> Bool
       lessOrEqualPrecedence level
