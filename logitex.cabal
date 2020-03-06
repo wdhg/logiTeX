@@ -45,4 +45,7 @@ test-suite test
     LogiTeX,
     Utils,
     UtilsTest,
-    Lexer
+    Lexer,
+    LexerTest,
+    Parser,
+    ParserTest
