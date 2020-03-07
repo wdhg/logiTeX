@@ -8,52 +8,43 @@ data AST
   | Leaf Token
     deriving (Show, Eq)
 
-astPrecedence :: AST -> Int
-astPrecedence (Node token _)
-  = tokenPrecedence token
-astPrecedence (Leaf token)
-  = tokenPrecedence token
+class Precedable a where
+  precedence :: a -> Int
 
-tokenPrecedence :: Token -> Int
-tokenPrecedence (Token sectionType _)
-  = precedence sectionType
+instance Precedable AST where
+  precedence (Node token _)
+    = precedence token
+  precedence (Leaf token)
+    = precedence token
 
-precedence :: SectionType -> Int
-precedence Question       = 3
-precedence SubQuestion    = 2
-precedence SubSubQuestion = 1
-precedence _              = 0
+instance Precedable Token where
+  precedence (Token Question _)       = 3
+  precedence (Token SubQuestion _)    = 2
+  precedence (Token SubSubQuestion _) = 1
+  precedence _                        = 0
+
+precedes :: (Precedable a, Precedable b) => a -> b -> Bool
+precedes x y
+  = (precedence x) > (precedence y)
 
 push :: AST -> AST -> AST
 push (Leaf token) tree
   = Node token [tree]
 push (Node token subTrees) tree
   = Node token (tree : subTrees)
-push (Root subTrees) tree
-  = Root (tree : subTrees)
-
-collate :: [AST] -> [AST]
-collate
-  = until allLessOrEqual collate'
-    where
-      lessOrEqualPrecedence :: Int -> AST -> Bool
-      lessOrEqualPrecedence level
-        = (<= level) . astPrecedence
-      allLessOrEqual :: [AST] -> Bool
-      allLessOrEqual (top : remaining)
-        = all (lessOrEqualPrecedence level) remaining
-          where
-            level
-              = astPrecedence top
-      collate' :: [AST] -> [AST]
-      collate' (top : remaining)
-        = (foldl push nodeTree $ top : subTrees) : remaining'
-          where
-            level
-              = astPrecedence top
-            (subTrees, nodeTree : remaining')
-              = span (lessOrEqualPrecedence level) remaining
 
 parse :: [Token] -> AST
 parse
-  = undefined
+  = parse' $ Root []
+    where
+      parse' :: AST -> [Token] -> AST
+      parse' root []
+        = case root of
+            (Root (t1 : t2 : remaining))
+              | t2 `precedes` t1 -> parse' (Root $ push t2 t1 : remaining) []
+            _                    -> root
+      parse' (Root trees@(t1 : t2 : remaining)) (token : tokens)
+        | t2 `precedes` t1 && (not $ t1 `precedes` token)
+          = parse' (Root $ push t2 t1 : remaining) $ token : tokens
+      parse' (Root trees) (token : tokens)
+        = parse' (Root $ Leaf token : trees) tokens

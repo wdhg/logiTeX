@@ -4,6 +4,12 @@ import Lexer
 import Parser
 import Test.HUnit
 
+text, question :: Token
+text
+  = Token Text "some text"
+question
+  = Token Question "question"
+
 pushTests :: Test
 pushTests
   = TestList
@@ -11,11 +17,6 @@ pushTests
     , push (Node question []) (Leaf text) ~?= Node question [Leaf text]
     , push (Root []) (Leaf text) ~?= Root [Leaf text]
     ]
-    where
-      text
-        = Token Text "some text"
-      question
-        = Token Question "question"
 
 tests :: Test
 tests
