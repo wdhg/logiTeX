@@ -24,7 +24,8 @@ executable logitex
     LogiTeX,
     Utils,
     Lexer,
-    Parser
+    Parser,
+    Compiler
 
 test-suite test
   type:
