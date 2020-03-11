@@ -49,4 +49,5 @@ test-suite test
     Lexer,
     LexerTest,
     Parser,
-    ParserTest
+    ParserTest,
+    Compiler
