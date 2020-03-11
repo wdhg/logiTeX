@@ -78,8 +78,8 @@ type Mappings
 
 globalMappings :: Mappings
 globalMappings
-  = [ ["=>"]  ==> " \\implies"
-    , ["<=>"] ==> "\\iff"
+  = [ ["<=>"] ==> "\\iff"
+    , ["=>"]  ==> "\\implies"
     , ["/="]  ==> "\\neq"
     , ["~="]  ==> "\\approx"
     , [":="]  ==> "\\triangleq"
@@ -107,16 +107,23 @@ getMappings sectionType
       logicSections
         = [Equation, EquationMulti, Latex, LatexMulti]
 
+applyMapping :: String -> Mapping -> String
+applyMapping text (keywords, replacement)
+  = foldl applyMapping' text keywords
+    where
+      applyMapping' :: String -> String -> String
+      applyMapping' "" _
+        = ""
+      applyMapping' text'@(c : cs) keyword
+        | before == keyword = replacement ++ (applyMapping' after keyword)
+        | otherwise         = c : applyMapping' cs keyword
+          where
+            (before, after)
+              = splitAt (length keyword) text'
+
 replace :: Mappings -> String -> String
 replace mappings text
-  = unwords $ map (replace' mappings) $ words text
-    where
-      replace' :: Mappings -> String -> String
-      replace' [] word
-        = word
-      replace' ((keywords, replacement) : mappings') word
-        | word `elem` keywords = replacement
-        | otherwise            = replace' mappings' word
+  = foldl applyMapping text mappings
 
 tokenToText :: Token -> String
 tokenToText (Token Comment _)
