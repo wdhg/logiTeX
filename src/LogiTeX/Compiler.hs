@@ -89,14 +89,13 @@ globalMappings
 
 logicMappings :: Mappings
 logicMappings
-  = [ ["%"] ==> ""
-    , ["\\A", "forall"] ==> "\\forall"
-    , ["\\E", "exists"] ==> "\\exists"
-    , ["in"] ==>  "\\in"
-    , ["&&", "and"] ==> "\\land"
-    , ["||", "or"] ==> "\\lor"
-    , ["not"] ==> "\\neg"
-    , ["precedes"] ==> "\\prec"
+  = [ [" \\A ", " forall "] ==> " \\forall "
+    , [" \\E ", " exists "] ==> " \\exists "
+    , [" in "] ==>  " \\in "
+    , [" && ", " and "] ==> " \\land "
+    , [" || ", " or "] ==> " \\lor "
+    , [" not "] ==> " \\neg "
+    , [" precedes "] ==> " \\prec "
     ]
 
 getMappings :: SectionType -> [Mappings]
