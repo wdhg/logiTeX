@@ -32,6 +32,8 @@ push (Leaf token) tree
   = Node token [tree]
 push (Node token subTrees) tree
   = Node token (tree : subTrees)
+push (Root subTrees) tree
+  = Root $ tree : subTrees
 
 parse :: [Token] -> AST
 parse
