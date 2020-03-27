@@ -1,14 +1,16 @@
-import qualified LexerTest  (tests)
-import qualified ParserTest (tests)
+import qualified CompilerTest (tests)
+import qualified LexerTest    (tests)
+import qualified ParserTest   (tests)
 import           Test.HUnit
-import qualified UtilsTest  (tests)
+import qualified UtilsTest    (tests)
 
 tests :: Test
 tests
   = TestList
-    [ UtilsTest.tests
+    [ CompilerTest.tests
     , LexerTest.tests
     , ParserTest.tests
+    , UtilsTest.tests
     ]
 
 main :: IO Counts
