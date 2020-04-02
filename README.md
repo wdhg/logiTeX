@@ -50,7 +50,7 @@ isEven x
 // regular latex can be placed on these lines and will be placed directly into the document
 @ \newline\newline
 
-// this is a multiline LaTex section
+// this is a multiline LaTeX section
 @@@
 \begin{center}
   This text will be center aligned in the document.
