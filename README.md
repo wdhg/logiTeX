@@ -4,7 +4,7 @@ logiTeX is a simple program to convert a basic language for logical statements i
 
 ## Example
 
-**NOTE: many of the features in this example are not implmented yet. This example only acts as a desired target for the language.**
+**NOTE: many of the features in this example are not implemented yet. This example only acts as a desired target for the language.**
 
 ````
 // this is a comment that won't show up in the final document
