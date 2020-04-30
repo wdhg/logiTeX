@@ -6,7 +6,7 @@ logiTeX is a simple program to convert a basic language for logical statements i
 
 **NOTE: many of the features in this example are not implmented yet. This example only acts as a desired target for the language.**
 
-````
+`````
 // this is a comment that won't show up in the final document
 
 // this defines the title of the document
@@ -57,4 +57,14 @@ isEven x
 \end{center}
 @@@
 
-````
+`````
+
+## Todo / Ideas
+
+- [ ] Better / easier multiline equations
+- [ ] Escape LaTeX in non LaTeX areas
+- [ ] Live editor and preview
+  - [ ] Vim plugin
+  - [ ] Live character rendering
+  - [ ] Add natural deduction rendering
+    - [ ] Verification
